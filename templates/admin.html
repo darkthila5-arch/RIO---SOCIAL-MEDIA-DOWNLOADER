@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#050505">
+  <title>Admin | RIO Downloader</title>
+  <link rel="icon" type="image/png" href="/static/favicon.png?v={{ v }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css?v={{ v }}">
+  <link rel="stylesheet" href="/static/admin.css?v={{ v }}">
+</head>
+<body class="admin">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="top scrolled" id="top">
+    <div class="wrap">
+      <a class="brand" href="/admin" aria-label="RIO Admin">
+        <img class="mark" src="/static/ghost.png?v={{ v }}" alt="" width="34" height="41">
+        <span class="wordmark">
+          <span class="w-top">RIO<span class="x">×</span></span>
+          <span class="w-bot">ADMIN PANEL <span id="aDay"></span></span>
+        </span>
+      </a>
+      <div class="top-right">
+        <a class="mini" href="/" target="_blank" rel="noopener">Open site</a>
+        <button id="logout" class="mini" type="button" hidden>Log out</button>
+      </div>
+    </div>
+  </header>
+  <main class="a-wrap">
+    <section id="login" class="a-card">
+      <div class="hero-mark" aria-hidden="true">
+        <span class="ring r1"></span><span class="ring r2"></span>
+        <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span>
+        <img class="hero-ghost" src="/static/ghost.png?v={{ v }}" alt="" width="110" height="134">
+      </div>
+      <h1>Admin <span class="grad">login</span></h1>
+      <p class="a-muted">Enter the admin password (the ADMIN_TOKEN you set on Render).</p>
+      <form id="loginForm" class="a-row">
+        <input id="pw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Admin password" required>
+        <button class="primary" type="submit">Log in</button>
+      </form>
+      <p id="loginMsg" class="status" role="status"></p>
+    </section>
+
+    <div id="dash" hidden>
+      <p id="warnTemp" class="a-warn" hidden>Numbers are kept in a temporary file and reset when Render restarts. Set <b>UPSTASH_REDIS_REST_URL</b> and <b>UPSTASH_REDIS_REST_TOKEN</b> to keep them for good.</p>
+
+      <section class="a-grid" id="cards"></section>
+
+      <section class="a-card" id="repCard">
+        <h2>Messages from users <span id="repBadge" class="a-badge" hidden></span></h2>
+        <p class="a-muted">Anonymous messages sent from the website or the app. With encryption on, messages are locked in the visitor's browser and can only be opened here, with your passphrase; the server only stores scrambled text. Your reply is shown only to the person who wrote it.</p>
+        <div id="e2eBox" class="a-e2e">
+          <h3>🔒 End-to-end encryption</h3>
+          <p class="a-muted" id="e2eInfo"></p>
+          <form id="e2eSetup" class="a-form" hidden>
+            <input id="e2ePass1" type="password" autocomplete="new-password" minlength="12" placeholder="New message passphrase (12+ characters)" aria-label="New message passphrase">
+            <input id="e2ePass2" type="password" autocomplete="new-password" minlength="12" placeholder="Type it again" aria-label="Repeat the passphrase">
+            <button class="primary" type="submit" id="e2eSetupBtn">Turn on encryption</button>
+          </form>
+          <form id="e2eLock" class="a-row" hidden>
+            <input id="e2ePass" type="password" autocomplete="off" placeholder="Message passphrase" aria-label="Message passphrase">
+            <button class="primary" type="submit">Unlock</button>
+          </form>
+          <div id="e2eOpen" hidden>
+            <p class="a-muted">Unlocked in this browser tab. Security code (visitors see the same code in their messages): <b id="e2eFp"></b></p>
+            <button id="e2eLockBtn" class="mini" type="button">Lock</button>
+          </div>
+          <button id="e2eReset" class="mini" type="button" hidden>Lost the passphrase? Start over</button>
+          <p id="e2eMsg" class="status" role="status"></p>
+        </div>
+        <div id="repList" class="a-list"></div>
+        <p id="repMsg" class="status" role="status"></p>
+      </section>
+
+      <section class="a-card">
+        <h2>Web or installed app</h2>
+        <div class="a-split" aria-hidden="true"><i id="splitApp"></i></div>
+        <p class="a-muted" id="splitText"></p>
+      </section>
+
+      <section class="a-card">
+        <h2>Downloads by site</h2>
+        <div class="a-table-wrap"><table class="a-table"><thead><tr><th>Site</th><th>Downloads</th><th>Data</th><th>Lookups OK</th><th>Lookups failed</th><th>Downloads failed</th></tr></thead><tbody id="plats"></tbody></table></div>
+      </section>
+
+      <section class="a-card">
+        <h2>Downloads by format</h2>
+        <p class="a-muted">Data really sent to visitors, split by file type.</p>
+        <div class="a-table-wrap"><table class="a-table"><thead><tr><th>Format</th><th>Files</th><th>Data</th><th>Share</th><th>Average file</th></tr></thead><tbody id="fmts"></tbody></table></div>
+      </section>
+
+      <section class="a-card">
+        <h2>Last 14 days</h2>
+        <div class="a-legend"><span class="k k1"></span>Downloads <span class="k k2"></span>Visits <span class="k k3"></span>Data (GB)</div>
+        <div id="chart" class="a-chart"></div>
+      </section>
+
+      <section class="a-card">
+        <h2>Send news</h2>
+        <p class="a-muted">Everyone who opens the website or the installed app sees it once as a popup window. Tick the box to also send it as a notification to people who turned notifications on; tapping it opens the popup.</p>
+        <form id="newsForm" class="a-form">
+          <div class="a-kinds" role="radiogroup" aria-label="Type of news">
+            <label class="chip"><input type="radio" name="nKind" value="news" checked><span>📰 News</span></label>
+            <label class="chip"><input type="radio" name="nKind" value="update"><span>⬆️ Update</span></label>
+            <label class="chip"><input type="radio" name="nKind" value="feature"><span>✨ New feature</span></label>
+            <label class="chip"><input type="radio" name="nKind" value="notice"><span>📣 Notice</span></label>
+          </div>
+          <input id="nTitle" type="text" maxlength="80" placeholder="Title (e.g. New: Spotify songs)" required>
+          <textarea id="nText" maxlength="280" rows="3" placeholder="Short message (optional)"></textarea>
+          <div class="a-two">
+            <input id="nUrl" type="text" maxlength="300" placeholder="Link, starting with https:// (optional)">
+            <input id="nCta" type="text" maxlength="24" placeholder="Button text (e.g. Try it)">
+          </div>
+          <div class="a-imgbox">
+            <input id="nImg" type="file" accept="image/*" hidden>
+            <div id="nImgAdd" class="a-imgadd">
+              <label class="a-muted" for="nImgUrl">🖼️ Picture (optional). <b>Recommended: paste a picture link</b>, it is downloaded and shrunk automatically.</label>
+              <div class="a-row">
+                <input id="nImgUrl" type="text" maxlength="300" inputmode="url" placeholder="Picture link, https://... (e.g. ends in .jpg or .png)">
+                <button id="nImgGo" class="primary" type="button">Use link</button>
+              </div>
+              <button id="nImgPick" class="mini" type="button">or upload from this device</button>
+              <small class="a-muted">Shown under the title. Best size: <b>1280×720 (16:9, like a YouTube thumbnail)</b> or <b>1080×1080 (1:1 square)</b>. Big pictures are shrunk automatically.</small>
+            </div>
+            <div id="nImgView" class="a-imgview" hidden>
+              <img id="nImgThumb" alt="" width="96" height="54">
+              <small id="nImgInfo"></small>
+              <button id="nImgClear" class="mini" type="button">Remove</button>
+            </div>
+          </div>
+          <div class="a-colors">
+            <label class="a-check"><input id="nColors" type="checkbox"> Custom button colours</label>
+            <div id="nColorBox" class="a-colorbox" hidden>
+              <label>Button colour <input id="nBg" type="color" value="#e11d48"></label>
+              <label>Button text colour <input id="nFg" type="color" value="#ffffff"></label>
+            </div>
+          </div>
+          <label class="a-check"><input id="nPush" type="checkbox" checked> Also send as a notification</label>
+          <div class="a-two">
+            <button class="primary" type="submit">Publish news</button>
+            <button id="nPreview" class="primary ghost-btn" type="button">Preview popup</button>
+          </div>
+        </form>
+        <p id="newsMsg" class="status" role="status"></p>
+        <div id="newsList" class="a-list"></div>
+      </section>
+
+      <section class="a-card">
+        <h2>Send a notification only</h2>
+        <p class="a-muted" id="pushInfo"></p>
+        <form id="pushForm" class="a-form">
+          <input id="pTitle" type="text" maxlength="80" placeholder="Title (e.g. Update available)" required>
+          <textarea id="pBody" maxlength="200" rows="2" placeholder="Message"></textarea>
+          <input id="pUrl" type="text" maxlength="300" placeholder="Link when tapped, https:// (optional, default is the site)">
+          <button class="primary" type="submit">Send notification</button>
+        </form>
+        <p id="pushMsg" class="status" role="status"></p>
+      </section>
+
+      <p class="a-muted a-foot">Privacy: only counts are stored. No links, no IP addresses, no visitor ids.</p>
+    </div>
+  </main>
+  <script src="/static/popup.js?v={{ v }}" defer></script>
+  <script src="/static/e2e.js?v={{ v }}" defer></script>
+  <script src="/static/admin.js?v={{ v }}" defer></script>
+</body>
+</html>

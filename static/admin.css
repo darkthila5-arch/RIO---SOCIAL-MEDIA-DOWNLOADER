@@ -1,0 +1,165 @@
+/* Admin page. Same black and white look, header and logo as the home page (colours from :root in style.css). */
+body.admin { display: block; }
+.a-wrap { position: relative; z-index: 1; width: 100%; max-width: 920px; margin: 0 auto; padding: 8px max(16px, env(safe-area-inset-right)) 60px max(16px, env(safe-area-inset-left)); }
+body.admin .top .wrap { max-width: 920px; }
+body.admin .top .mini { text-decoration: none; display: inline-flex; align-items: center; }
+#aDay { margin-left: .6em; opacity: .8; letter-spacing: .08em; }
+#login { text-align: center; max-width: 460px; margin: 18px auto; padding: 8px 22px 26px; }
+#login .a-row { text-align: left; }
+#login .hero-mark { margin-bottom: 6px; }
+#login h1 { font-size: 2rem; margin-bottom: 10px; }
+.a-card { background: var(--card); border: 2px solid var(--line); border-radius: 20px; padding: 20px; margin-bottom: 16px; }
+.a-card h1, .a-card h2 { margin: 0 0 8px; font-size: 1.15rem; }
+.a-muted { color: var(--muted); font-size: .92rem; margin: 0 0 12px; }
+.a-foot { text-align: center; margin-top: 24px; }
+.a-warn { background: color-mix(in srgb, #f5b301 14%, transparent); border: 1px solid #8a6a00; color: #ffd66b; border-radius: 14px; padding: 10px 14px; font-size: .9rem; }
+.a-row { display: flex; gap: 10px; }
+.a-row input { flex: 1; min-width: 0; }
+.a-card input[type=text], .a-card input[type=password], .a-card textarea {
+  width: 100%; font: inherit; color: var(--ink); background: var(--paper); border: 2px solid var(--line); border-radius: 14px; padding: 13px 14px; outline: none;
+}
+.a-card input:focus, .a-card textarea:focus { border-color: var(--accent); }
+.a-form { display: grid; gap: 10px; }
+.a-check { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .95rem; }
+.a-check input { width: 20px; height: 20px; accent-color: var(--accent); }
+.a-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+@media (min-width: 700px) { .a-grid { grid-template-columns: repeat(4, 1fr); } }
+.a-stat { background: var(--card); border: 2px solid var(--line); border-radius: 18px; padding: 14px 16px; }
+.a-stat b { display: block; font-size: 1.9rem; line-height: 1.1; color: var(--accent-2); font-variant-numeric: tabular-nums; }
+.a-stat span { color: var(--muted); font-size: .85rem; }
+.a-stat small { display: block; color: var(--muted); font-size: .75rem; margin-top: 2px; }
+.a-split { height: 14px; border-radius: 999px; background: var(--tab-bg); overflow: hidden; margin: 10px 0; }
+.a-split i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .5s var(--ease); }
+.a-table-wrap { overflow-x: auto; }
+.a-table { width: 100%; border-collapse: collapse; font-size: .92rem; font-variant-numeric: tabular-nums; }
+.a-table th, .a-table td { text-align: right; padding: 9px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.a-table th:first-child, .a-table td:first-child { text-align: left; }
+.a-table th { color: var(--muted); font-weight: 600; font-size: .8rem; }
+.a-legend { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .85rem; margin-bottom: 8px; }
+.a-legend .k { width: 12px; height: 12px; border-radius: 4px; display: inline-block; margin-left: 10px; }
+.k3 { background: #5fd38d; }
+.k1 { background: var(--accent); } .k2 { background: color-mix(in srgb, var(--accent-2) 45%, var(--tab-bg)); }
+.a-chart { display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; align-items: end; height: 150px; }
+.a-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 4px; min-width: 0; }
+.a-bars { display: flex; align-items: flex-end; gap: 2px; width: 100%; flex: 1; }
+.a-bars i { flex: 1; border-radius: 4px 4px 0 0; min-height: 2px; }
+.a-bars .b3 { background: #5fd38d; }
+.a-bars .b1 { background: var(--accent); } .a-bars .b2 { background: color-mix(in srgb, var(--accent-2) 45%, var(--tab-bg)); }
+.a-col span { font-size: .62rem; color: var(--muted); }
+.a-list { display: grid; gap: 8px; margin-top: 12px; }
+.a-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+.a-item b { display: block; } .a-item small { color: var(--muted); }
+.a-item button { flex: none; }
+
+/* the home page's two-column form rule must not apply here */
+.a-form { grid-template-columns: minmax(0, 1fr); }
+.a-form .primary { width: 100%; min-width: 0; }
+.a-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 520px) { .a-two { grid-template-columns: minmax(0, 1fr); } }
+.a-kinds { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 620px) { .a-kinds { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.a-kinds .chip span { text-align: center; padding-left: 6px; padding-right: 6px; white-space: nowrap; }
+.ghost-btn { background: transparent; color: var(--ink); border: 2px solid var(--line); }
+@media (hover: hover) { .ghost-btn:hover { border-color: var(--accent); box-shadow: none; } }
+.a-item .a-kind { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 2px; }
+.a-item small { display: block; overflow-wrap: anywhere; }
+
+.a-badge { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 7px; margin-left: 8px; border-radius: 999px; background: var(--accent); color: var(--on-ink); font-size: .78rem; font-weight: 800; vertical-align: middle; }
+.a-badge[hidden] { display: none; }
+.a-rep { display: block; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.a-rep.new { border-color: var(--accent); }
+.a-rep > button.a-rep-head { display: grid; gap: 2px; width: 100%; padding: 11px 13px; text-align: left; background: none; border: 0; cursor: pointer; color: inherit; }
+.a-rep-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.a-rep-top b { font-size: .95rem; }
+.a-tag { font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; background: var(--tab-bg); color: var(--muted); }
+.a-tag.on { background: var(--accent); color: var(--on-ink); }
+.a-rep-prev { color: var(--muted); font-size: .88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.a-rep-body { display: none; padding: 0 13px 13px; }
+.a-rep.open .a-rep-body { display: block; }
+.a-msg { max-width: 90%; margin: 8px 0; padding: 9px 13px; border-radius: 16px; background: var(--tab-bg); }
+.a-msg.admin { margin-left: auto; background: var(--tint); border: 1px solid var(--accent); border-bottom-right-radius: 5px; }
+.a-msg.user { border-bottom-left-radius: 5px; }
+.a-msg p { margin: 2px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.a-msg small { color: var(--muted); font-size: .72rem; }
+.a-msg .a-by { display: block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-2); }
+.a-rep-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.a-rep-actions .primary { width: auto; min-width: 150px; min-height: 44px; padding: 8px 18px; }
+.a-rep textarea { width: 100%; font: inherit; color: var(--ink); background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 11px 13px; outline: none; }
+.a-rep textarea:focus { border-color: var(--accent); }
+
+.a-e2e { border: 2px solid var(--line); border-radius: 16px; padding: 14px 16px; margin: 0 0 14px; background: var(--paper); }
+.a-e2e h3 { margin: 0 0 6px; font-size: 1rem; }
+.a-e2e b { font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+
+/* ================= Responsive fixes (phones, tablets, desktop) =================
+   Bug that was here: .primary has width:100%, so inside the flex row .a-row it took the whole line and
+   squeezed the password box to ~30px on every screen. The button now keeps its own width on wide screens
+   and the row stacks (input on top, button below, both full width) on phones. */
+.a-row { align-items: stretch; }
+.a-row .primary { width: auto; flex: 0 0 auto; min-width: 120px; }
+.a-card input[type=text], .a-card input[type=password], .a-card textarea {
+  font-size: 1rem;                 /* 16px: stops iOS Safari from zooming into the box */
+  min-height: 52px;
+  -webkit-appearance: none; appearance: none;
+}
+.a-card textarea { min-height: 0; resize: vertical; }
+body.admin .top .mini { color: var(--ink); min-height: 40px; padding: 8px 14px; }
+body.admin .top .wrap { flex-wrap: wrap; row-gap: 8px; }
+body.admin .top .top-right { flex-wrap: wrap; }
+.a-wrap { padding-bottom: max(60px, calc(env(safe-area-inset-bottom) + 24px)); }
+.a-table-wrap { -webkit-overflow-scrolling: touch; margin: 0 -4px; padding: 0 4px; }
+.a-rep-head, .a-item { min-width: 0; }
+.a-item > div { min-width: 0; }
+.a-e2e .a-row, .a-e2e .a-form { margin-bottom: 8px; }
+.a-e2e .mini, .a-rep-actions .mini { min-height: 44px; }
+
+@media (max-width: 560px) {
+  .a-row { flex-direction: column; }
+  .a-row .primary { width: 100%; flex: none; }
+  .a-card { padding: 16px 14px; border-radius: 18px; }
+  #login { margin: 10px auto; padding: 6px 14px 20px; }
+  #login h1 { font-size: 1.7rem; }
+  .a-grid { gap: 10px; }
+  .a-stat { padding: 12px 12px; border-radius: 16px; }
+  .a-stat b { font-size: 1.5rem; overflow-wrap: anywhere; }
+  .a-table { font-size: .85rem; }
+  .a-table th, .a-table td { padding: 8px 6px; }
+  .a-chart { gap: 3px; }
+  .a-col span { font-size: .55rem; }
+  .a-legend { flex-wrap: wrap; row-gap: 4px; }
+  .a-rep-actions .primary { width: 100%; }
+  .a-rep-actions .mini { flex: 1 1 140px; }
+  .a-msg { max-width: 96%; }
+  .a-item { flex-direction: column; align-items: stretch; }
+  .a-item button { width: 100%; min-height: 44px; }
+}
+@media (max-width: 380px) {
+  body.admin .top .brand { gap: 8px; }
+  body.admin .top .mini { padding: 6px 10px; font-size: .8rem; }
+  .a-wrap { padding-left: max(10px, env(safe-area-inset-left)); padding-right: max(10px, env(safe-area-inset-right)); }
+  .a-kinds .chip span { font-size: .8rem; }
+}
+@media (min-width: 561px) and (max-width: 899px) {
+  .a-wrap { max-width: 720px; }
+}
+
+/* the `hidden` attribute must win over display:flex / display:grid (otherwise the encryption setup AND unlock forms show together) */
+.a-row[hidden], .a-form[hidden], .a-e2e [hidden], #dash[hidden], .a-warn[hidden], .a-badge[hidden] { display: none !important; }
+
+/* news picture + button colours */
+.a-imgbox { display: grid; gap: 8px; justify-items: start; }
+.a-imgview { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.a-imgview[hidden], .a-colorbox[hidden] { display: none !important; }
+.a-imgview img { width: 96px; height: 54px; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); }
+.a-colorbox { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 8px; }
+.a-colorbox label { display: flex; align-items: center; gap: 8px; font-size: .9rem; color: var(--muted); }
+.a-colorbox input[type=color] { width: 44px; height: 34px; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: none; cursor: pointer; }
+.a-item .a-thumb { width: 64px; height: 36px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); margin: 4px 0; display: block; }
+.a-stats { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 6px; font-size: .82rem; color: var(--ink); }
+.a-stats span { white-space: nowrap; }
+.a-stats b { display: inline; }
+.a-item > div:first-child { min-width: 0; flex: 1; }
+.a-imgadd { display: grid; gap: 8px; justify-items: stretch; width: 100%; }
+.a-imgadd .mini { justify-self: start; }
+.a-imgadd[hidden] { display: none !important; }
+.a-imgbox { justify-items: stretch; }
